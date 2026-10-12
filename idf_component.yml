@@ -1,0 +1,7 @@
+version: "0.1.0"
+description: Game Boy DMG emulator, cartridge persistence and USB serial gamepad host for ESP32-S3
+dependencies:
+  espressif/usb:
+    version: "^1.0.0"
+    rules:
+      - if: "idf_version >=6.0"

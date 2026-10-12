@@ -1,0 +1,19 @@
+menu "ESP32 Game Boy"
+
+    config GAMEBOY_USB_SERIAL_HOST
+        bool "Build the USB serial gamepad host"
+        default y
+        depends on SOC_USB_OTG_SUPPORTED
+        help
+            Build the USB host that reads gamepad reports from an ESP32-C3
+            running the serial gamepad firmware. It takes over the native USB
+            port while active.
+
+    config GAMEBOY_GRAPHICS_INTERNAL_RAM
+        bool "Place emulator WRAM, VRAM and LCD buffers in internal RAM"
+        default y
+        help
+            Try internal RAM first for the 54,912-byte WRAM/VRAM/LCD block and
+            fall back to PSRAM. Internal RAM is faster for the per-frame work.
+
+endmenu

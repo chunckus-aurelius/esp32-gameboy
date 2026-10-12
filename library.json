@@ -1,0 +1,15 @@
+{
+  "name": "ESP32GameBoy",
+  "version": "0.1.0",
+  "description": "Game Boy DMG emulator, cartridge persistence and app-scoped runtime for ESP32-S3",
+  "frameworks": ["arduino"],
+  "platforms": ["espressif32"],
+  "headers": ["gameboy/GameBoy.h"],
+  "build": {
+    "flags": [
+      "-DMINIGB_APU_AUDIO_FORMAT_S16SYS",
+      "-O3",
+      "-Wno-error=unused-label"
+    ]
+  }
+}

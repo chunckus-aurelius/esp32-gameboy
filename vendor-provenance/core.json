@@ -1,0 +1,82 @@
+{
+  "repository": "https://gitlab.com/zephray/paperboy",
+  "commit": "e70b2936d2f76c1c864fa442584104c6aaa17311",
+  "note": "The vendored core was obtained through the PaperBoy snapshot; no PaperBoy-original code is included. CrankBoy repository: https://github.com/CrankBoyHQ/crankboy-app",
+  "source_directory": "main/crankboy_core",
+  "files": {
+    "peanut_gb.h": {
+      "upstream_sha256": "159558641bb5f89f96679af91a58d7a089331af1a71dba601f2d19dcd9468d25",
+      "local_sha256": "1a1a2ff5a9c63302b287a4d2f7467bf6faaf4e52706054b055ded43782668788",
+      "modified": true,
+      "origin": "Peanut-GB (Mahyar Koshkouei, MIT) -> CrankBoy libs/peanut_gb.h (MIT) -> PaperBoy e70b2936 snapshot; Playdate-specific code removed; include changed to esp32_crankboy_port.h"
+    },
+    "peanut_gb_core.h": {
+      "upstream_sha256": "b7028c419d1d5c4297f25cad69928781cb3d0c35948fb0fa0291d7e20dd3ea96",
+      "local_sha256": "b7028c419d1d5c4297f25cad69928781cb3d0c35948fb0fa0291d7e20dd3ea96",
+      "modified": false,
+      "origin": "Peanut-GB (Mahyar Koshkouei, MIT) -> CrankBoy libs/peanut_gb_core.h (MIT) -> PaperBoy e70b2936 snapshot; Playdate-specific code removed; CrankBoy revision not pinned"
+    },
+    "pgb/pgb_common.h": {
+      "upstream_sha256": "60bcc90a424a96853ccedb0b95353cbeef24d4d9fb11874ff57e39ca6367abaf",
+      "local_sha256": "60bcc90a424a96853ccedb0b95353cbeef24d4d9fb11874ff57e39ca6367abaf",
+      "modified": false,
+      "origin": "CrankBoy libs/pgb/pgb_common.h (MIT), byte-identical blob first committed in 930ddafa40 -> PaperBoy e70b2936 snapshot"
+    },
+    "pgb/pgb_v1.h": {
+      "upstream_sha256": "3527dfcd2f65d5c844cc7041782f2a77b5fffa1ceace6005a35d17c283ea2fda",
+      "local_sha256": "3527dfcd2f65d5c844cc7041782f2a77b5fffa1ceace6005a35d17c283ea2fda",
+      "modified": false,
+      "origin": "CrankBoy libs/pgb/pgb_v1.h (MIT), byte-identical blob first committed in 49409fbe83 -> PaperBoy e70b2936 snapshot"
+    },
+    "pgb/pgb_v2.h": {
+      "upstream_sha256": "90302fb24adfe9a6d99c0e709ccc650ffaef38e274c11a5adf59c625f6eed751",
+      "local_sha256": "90302fb24adfe9a6d99c0e709ccc650ffaef38e274c11a5adf59c625f6eed751",
+      "modified": false,
+      "origin": "CrankBoy libs/pgb/pgb_v2.h (MIT), byte-identical blob first committed in f92e5dd7d1 -> PaperBoy e70b2936 snapshot"
+    },
+    "pgb/pgb_v3.h": {
+      "upstream_sha256": "cdeb6690d94ac31cd6b6c741662c09ff853b9757de9dda7f1b84f405c9089918",
+      "local_sha256": "cdeb6690d94ac31cd6b6c741662c09ff853b9757de9dda7f1b84f405c9089918",
+      "modified": false,
+      "origin": "CrankBoy libs/pgb/pgb_v3.h (MIT), byte-identical blob first committed in 76bc69bce4 -> PaperBoy e70b2936 snapshot"
+    },
+    "pgb/pgb_v4.h": {
+      "upstream_sha256": "d5d5e8c68383b2ae6fc9d1de58abad910da246370e9ea89cbe0c6905a1dfae98",
+      "local_sha256": "d5d5e8c68383b2ae6fc9d1de58abad910da246370e9ea89cbe0c6905a1dfae98",
+      "modified": false,
+      "origin": "CrankBoy libs/pgb/pgb_v4.h (MIT), byte-identical blob first committed in 5cbb6b64a9 -> PaperBoy e70b2936 snapshot"
+    },
+    "minigb_apu/LICENSE": {
+      "upstream_sha256": "d286317975f85b441cedcd46acf4afa3c97fc1f52466f1fbd1c8dc158fde5472",
+      "local_sha256": "d286317975f85b441cedcd46acf4afa3c97fc1f52466f1fbd1c8dc158fde5472",
+      "modified": false,
+      "origin": "Peanut-GB examples/sdl2/minigb_apu (MIT, Alex Baines 2017, Mahyar Koshkouei 2019) -> PaperBoy main/minigb_apu snapshot"
+    },
+    "minigb_apu/minigb_apu.c": {
+      "upstream_sha256": "5cf1aa5710117a6f2fc0862f0afe9a6088f128bb0d0a9dd3b832f05089db21ee",
+      "local_sha256": "ce4d56180b992e81e4cdc1d24d604d4d897a5f0bb6fad2f72a2c68cf2baadbc5",
+      "modified": true,
+      "origin": "Peanut-GB examples/sdl2/minigb_apu (MIT, Alex Baines 2017, Mahyar Koshkouei 2019) -> PaperBoy main/minigb_apu snapshot"
+    },
+    "minigb_apu/minigb_apu.h": {
+      "upstream_sha256": "145683122a186b7ae7cebfc6957a1665889a125c038e13af0ce8d200a5d91da5",
+      "local_sha256": "19fcf559895781ff0bf6070937d21c6470d7da980c7989041eb13a06bd915d4d",
+      "modified": true,
+      "origin": "Peanut-GB examples/sdl2/minigb_apu (MIT, Alex Baines 2017, Mahyar Koshkouei 2019) -> PaperBoy main/minigb_apu snapshot"
+    }
+  },
+  "additional_source_directory": "main/minigb_apu",
+  "removed_files": {
+    "paperboy_crankboy_compat.h": {
+      "origin": "PaperBoy-original glue, no license; removed",
+      "upstream_sha256": "bbd57e6cea0bbc7b01f07d092a88aa0840796b9c6d46a86e5bd50f9591c0e790",
+      "replaced_by": "esp32_crankboy_port.h"
+    }
+  },
+  "original_files": {
+    "esp32_crankboy_port.h": {
+      "origin": "original, not vendored; MIT, Copyright (c) 2026 kuslota; reverse_bits_* adapted from CrankBoy src/utility.h (MIT)",
+      "local_sha256": "5b778acbfaa1a727d03c4d303f9fc5ec97d7dcaa2a35506de8f09a7cb7379893"
+    }
+  }
+}
