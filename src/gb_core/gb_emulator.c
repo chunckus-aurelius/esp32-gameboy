@@ -160,7 +160,11 @@ static void rtc_advance(void)
     }
     rtc_wall = 0;
     rtc_cycles += GB_FRAME_CYCLES;
-    if (rtc_cycles >= GB_CLOCK_HZ) { rtc_cycles -= GB_CLOCK_HZ; gb_catch_up_rtc_direct(&machine, 1); }
+    if (rtc_cycles >= GB_CLOCK_HZ) {
+        rtc_cycles -= GB_CLOCK_HZ; gb_catch_up_rtc_direct(&machine, 1);
+        /* With no wall-clock anchor the registers are the only record of this second. */
+        machine.direct.sram_updated = 1;
+    }
 }
 
 static void put_le(uint8_t *dst, uint64_t value, unsigned bytes)
@@ -221,6 +225,8 @@ bool gb_emulator_init(const uint8_t *rom, size_t size)
 bool gb_emulator_frame(bool skip_render)
 {
     if (!ready) return false;
+    /* Catch up before the game runs so boot-time reads and latches see the current time. */
+    if (has_rtc) rtc_advance();
     if (setjmp(error_guard)) { guard_active = false; return false; }
     guard_active = true;
     machine.direct.frame_skip = skip_render;
@@ -235,7 +241,6 @@ bool gb_emulator_frame(bool skip_render)
         pending_audio[i] = (int16_t)(((int32_t)stereo[2*i] + stereo[2*i+1]) / 2);
     }
     pending_audio_ready = true;
-    if (has_rtc) rtc_advance();
     return ready;
 }
 const uint8_t *gb_emulator_pixels(void) { return lcd; }

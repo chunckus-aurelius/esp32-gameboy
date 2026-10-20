@@ -108,8 +108,9 @@ It returns false once the core has stopped on an illegal opcode;
   pauses, power-off and checkpoint restores. Without one, or while `fn` returns
   false, the cartridge clock advances with emulated time.
 - `gb_emulator_save_size/dirty/copy/load/clean` expose battery RAM. `save_dirty`
-  turns true when the game writes cartridge RAM; call `save_clean` after
-  copying it out.
+  turns true when the game writes cartridge RAM, or when the cartridge clock
+  advances on emulated time (there is no wall-clock anchor to recover it from);
+  call `save_clean` after copying it out.
 - `gb_emulator_state_size/copy/load` capture and restore a full snapshot.
 
 ### Video conversion (`gb_video.h`)

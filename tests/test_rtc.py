@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory(prefix='gb-rtc-') as tmp:
                        ('gb_emulator_validate_rom',[u8p,C.c_size_t],C.c_bool),
                        ('gb_emulator_rom_save_size',[u8p,C.c_size_t],C.c_size_t),
                        ('gb_emulator_rom_save_accepted',[u8p,C.c_size_t,C.c_size_t],C.c_bool),
-                       ('gb_emulator_save_size',[],C.c_size_t),('gb_emulator_save_dirty',[],C.c_bool),
+                       ('gb_emulator_save_size',[],C.c_size_t),('gb_emulator_save_dirty',[],C.c_bool),('gb_emulator_save_clean',[],None),
                        ('gb_emulator_save_copy',[u8p,C.c_size_t],C.c_bool),('gb_emulator_save_load',[u8p,C.c_size_t],C.c_bool),
                        ('gb_emulator_state_size',[],C.c_size_t),('gb_emulator_state_copy',[u8p,C.c_size_t],C.c_bool),
                        ('gb_emulator_state_load',[u8p,C.c_size_t],C.c_bool)]:
@@ -106,15 +106,28 @@ with tempfile.TemporaryDirectory(prefix='gb-rtc-') as tmp:
  now[0]=40000;assert core.gb_emulator_frame(True)
  data=save();assert data[:32768]==ram and regs(data)[0]==[0,0,0,0,0] and regs(data)[2]==40000
  assert not core.gb_emulator_save_load(buf(ram[:-1]),32767)
+ # Catch-up happens before the first frame runs: a game that latches and reads seconds at boot
+ # sees the elapsed time, not the stale saved value.
+ program=bytes([0xf3,0x3e,0x0a,0xea,0x00,0x00, 0x3e,0x08,0xea,0x00,0x40, 0x3e,0x00,0xea,0x00,0x60,
+                0x3e,0x01,0xea,0x00,0x60, 0xfa,0x00,0xa0,0x47, 0x3e,0x00,0xea,0x00,0x40,
+                0x78,0xea,0x00,0xa0, 0x18,0xfe])
+ boot,boot_size=cart(0x10,3,program)
+ assert core.gb_emulator_init(boot,boot_size)
+ assert core.gb_emulator_save_load(buf(bytes(32768)+footer([10,0,0,0,0],[0]*5,45000)),32768+48)
+ now[0]=45020;assert core.gb_emulator_frame(True)
+ data=save();assert data[0]==30 and regs(data)[1][0]==30,(data[0],regs(data))
 
  # Without a clock the cartridge clock advances with emulated time (59.7 frames per second).
  now[0]=None
+ # Each emulated second marks the save dirty, since the footer is the only record of it.
  assert core.gb_emulator_init(rom,size)
  for _ in range(59):assert core.gb_emulator_frame(True)
- assert regs(save())[0][0]==0 and regs(save())[2]==0
- assert core.gb_emulator_frame(True);assert regs(save())[0][0]==1
- for _ in range(60):assert core.gb_emulator_frame(True)
- assert regs(save())[0][0]==2
+ assert regs(save())[0][0]==0 and regs(save())[2]==0 and not core.gb_emulator_save_dirty()
+ assert core.gb_emulator_frame(True);assert regs(save())[0][0]==1 and core.gb_emulator_save_dirty()
+ core.gb_emulator_save_clean()
+ for _ in range(59):assert core.gb_emulator_frame(True)
+ assert not core.gb_emulator_save_dirty()
+ assert core.gb_emulator_frame(True);assert regs(save())[0][0]==2 and core.gb_emulator_save_dirty()
 
  # Checkpoints carry the clock anchor: resuming later catches up from the checkpoint time.
  now[0]=50000
@@ -133,4 +146,4 @@ with tempfile.TemporaryDirectory(prefix='gb-rtc-') as tmp:
  now[0]=60000;assert core.gb_emulator_init(rom,size) and core.gb_emulator_save_size()==FOOTER
  for _ in range(2):assert core.gb_emulator_frame(True)
  assert len(save())==FOOTER and regs(save())[2]==60000
-print('PASS: MBC3 clock mappers, masked/latched register access, open bus, wall-clock and emulated ticking, carry/halt, 48/44/0-byte footers, checkpoint catch-up, clock-only carts')
+print('PASS: MBC3 clock mappers, masked/latched register access, open bus, wall-clock and emulated ticking, boot-time catch-up, fallback persistence, carry/halt, 48/44/0-byte footers, checkpoint catch-up, clock-only carts')
